@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -30,7 +31,7 @@ func initializeRouter() {
 	r.HandleFunc("/users{id}", UpateUser).Methods("PUT")
 
 	// now i have to start the server and serve at port 9000
-	log.fatal(http.ListenAndServe(":9000", r))
+	log.Fatal(http.ListenAndServe(":9000", r))
 
 }
 
