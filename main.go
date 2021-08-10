@@ -36,5 +36,6 @@ func initializeRouter() {
 }
 
 func main() {
+	initialMigration()
 	initializeRouter()
 }
