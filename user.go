@@ -78,9 +78,26 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpateUser(w http.ResponseWriter, r *http.Request) {
-
+	w.Header().Set("Content-Type", "application/json")
+	// Ill be getting which particular id that I want to fetch data
+	params := mux.Vars(r)
+	var user User
+	// getting value from database
+	DB.First(&user, params["id"])
+	// whatever data I'm getting from the body I'll just decode the information and update the reference of the same user.
+	json.NewDecoder(r.Body).Decode(&user)
+	DB.Save(&user)
+	// passing the data back to browser itself
+	json.NewEncoder(w).Encode(user)
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
-
+	//setting the header information
+	w.Header().Set("Content-Type", "application/json")
+	// getting the parameter
+	params := mux.Vars(r)
+	var user User
+	// getting the user and deleting user reference and param id
+	DB.Delete(&user, params["id"])
+	json.NewEncoder(w).Encode("The user is deleted succesfully")
 }
