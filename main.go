@@ -25,10 +25,10 @@ func initializeRouter() {
 	r.HandleFunc("/users{id}", GetUser).Methods("GET")
 	// create user
 	r.HandleFunc("/users", CreateUser).Methods("POST")
-	// delete user
-	r.HandleFunc("/users{id}", DeleteUser).Methods("DELETE")
 	// update user
 	r.HandleFunc("/users{id}", UpateUser).Methods("PUT")
+	// delete user
+	r.HandleFunc("/users{id}", DeleteUser).Methods("DELETE")
 
 	// now i have to start the server and serve at port 9000
 	log.Fatal(http.ListenAndServe(":9000", r))
@@ -36,6 +36,6 @@ func initializeRouter() {
 }
 
 func main() {
-	initialMigration()
+	InitialMigration()
 	initializeRouter()
 }
