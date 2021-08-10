@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -44,11 +45,24 @@ func InitialMigration() {
 
 // creating handler methods to recieve all thedata from REST API's and save to the database.
 func GetUsers(w http.ResponseWriter, r *http.Request) {
-
+	w.Header().Set("Content-Type", "application/json")
+	// getting list of users available
+	var users []User
+	// fetching
+	DB.Find(&users)
+	// once after I get all the data I just have to encode and send back to client.
+	json.NewEncoder(w).Encode(users)
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
-
+	w.Header().Set("Content-Type", "application/json")
+	// Ill be getting which particular id that I want to fetch data
+	params := mux.Vars(r)
+	var user User
+	// finding data in databse
+	DB.First(&user, params["id"])
+	// passing the data back
+	json.NewEncoder(w).Encode(user)
 }
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
